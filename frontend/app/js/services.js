@@ -2,19 +2,38 @@
 
 /* Services */
 
+angular.module('emibu.services', ['ngResource'])
+    .value('version', '0.1')
+	.factory('Comment', function($resource){
+		return $resource('api/comments.json', {}, {
+			query: {method:'GET', params:{phoneId:'comments'}, isArray:true}
+		});})
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('myApp.services', []).
-	value('version', '0.1').
-	service('authentication', function($http) {
+	.factory('User', function($resource){
+		return $resource('api/users.json', {}, {
+			query: {method:'GET', params:{phoneId:'users'}, isArray:true}
+		});})
+
+	.factory('File', function($resource){
+		return $resource('api/files.json', {}, {
+			query: {method:'GET', params:{phoneId:'files'}, isArray:true}
+		});})
+
+	.factory('Permission', function($resource){
+		return $resource('api/permissions.json', {}, {
+			query: {method:'GET', params:{phoneId:'permissions'}, isArray:true}
+		});
+	})
+
+	.service('authentication', function($http) {
 		this.verify_session = function() {
 			return $http.get("api/ses/verify_session").then(function(res) {
 				return res.data;
 			});
 		}
-	}).
-	constant('authenticationResolveVerifier', function($q, $window, authentication) {
+	})
+
+	.constant('authenticationResolveVerifier', function($q, $window, authentication) {
 		var q = $q.defer();
 
 		authentication.verify_session().then(function(res) {

@@ -3,7 +3,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-	beforeEach(module('myApp.services'));
+	beforeEach(module('emibu.services'));
 
 	var $httpBackend;
 
@@ -16,6 +16,7 @@ describe('service', function() {
 			expect(version).toEqual('0.1');
 		}));
 	});
+
 	describe('authentication', function() {
 		var authServer;
 

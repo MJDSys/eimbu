@@ -1,0 +1,26 @@
+<div class="row-fluid">
+	<div class="span2"><h2>Permissions</h2>
+		<div ng-controller="PermissionCtrl">
+		  <ul class="unstyled">
+			<li ng-repeat="permission in permissions">
+				<input type="checkbox" ng-model="permission.enabled">
+				{{permission.displayName}}
+			</li>
+		  </ul>
+		</div>
+    </div>
+	<div class="span2"><h2>Users</h2>
+		<div ng-controller="UserCtrl">
+			<span>{{users.length}} can view and make comments</span>
+			<form ng-submit="addUser()">
+				<input type="text" ng-model="userEmail" size="30" placeholder="Email">
+				<input class="btn-primary" type="submit" value="add">
+			</form>
+			<ul class="unstyled">
+				<li ng-repeat="user in users">
+					<img src={{user.picture}} alt={{user.name}} width=64 height=64 />{{user.name}}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

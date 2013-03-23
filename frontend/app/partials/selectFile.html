@@ -1,0 +1,22 @@
+<div class="row-fluid">
+	<div class="span4 offset2"><h2>Files</h2>
+		<div ng-controller="FileCtrl">
+			<span>{{files.length}} files</span>
+			[<a href="" ng-click="refresh()">refresh</a>]
+			[<a href="" ng-click="upDirectory()">Up a Directory</a>]
+			<ul class="unstyled">
+				<li ng-repeat="file in files">
+					<div ng-switch on="file.isDirectory" >
+						<a ng-switch-when="true" href={{"#select/"+file.id}}><i class="icon-folder-open"></i>{{file.name}}</a>
+						<a ng-switch-default href={{"#select/"+file.id}}><i class="icon-file"></i>{{file.name}}</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+    </div>
+	<div class="span2">
+		<form ng-submit="uploadFile()">
+			<input class="btn-primary btn-large" type="submit" value="Upload New File">
+		</form>
+	</div>
+</div>
