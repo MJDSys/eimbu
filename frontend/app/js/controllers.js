@@ -79,3 +79,31 @@ function FileCtrl($scope, $location, File) {
 	};
 	//$location.path('/select/critiquepaper/');
 }
+
+function PdfCtrl($scope, $location){
+	$scope.pdfUrl = '/api/pdf/tracemonkey.pdf';//'http://cdn.mozilla.net/pdfjs/tracemonkey.pdf';
+	PDFJS.disableWorker = true; //disable cross-site origin issue
+	$scope.pageNum = -1
+	$scope.scale = 1.4
+	$scope.pdfDoc = null;
+	
+	$scope.goPrevious = function() {
+		if ($scope.pageNum <= 1)
+			return;
+		$scope.pageNum--;
+		//$scope.renderPage($scope.pageNum);
+	}
+	$scope.goNext = function() {
+		if ($scope.pageNum >= $scope.pdfDoc.numPages)
+			return;
+		$scope.pageNum++;
+		//$scope.renderPage($scope.pageNum);
+	}
+	PDFJS.getDocument($scope.pdfUrl).then(function getPdfHelloWorld(_pdfDoc) {
+		$scope.$apply(function() {
+			$scope.pdfDoc = _pdfDoc;
+			$scope.pageNum = 1;
+			//$scope.renderPage($scope.pageNum);
+		});
+	});
+}

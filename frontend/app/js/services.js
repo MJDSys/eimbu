@@ -3,7 +3,7 @@
 /* Services */
 
 angular.module('myApp.services', ['ngResource'])
-    .value('version', '0.1')
+	.value('version', '0.1')
 	.factory('Comment', function($resource){
 		return $resource('api/comments.json', {}, {
 			query: {method:'GET', params:{}, isArray:true}

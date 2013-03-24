@@ -1,6 +1,9 @@
 <div class="row-fluid">
-	<div class="span6 offset2">
-		<canvas id="the-canvas" style="border:1px solid black;"/>
+	<div class="span6 offset2" ng-controller="PdfCtrl">
+		<span>Page {{pageNum}} of {{pdfDoc.numPages}}</span><br/>
+		<button class="btn-primary" ng-click="goPrevious()" type="button">Previous Page</button>
+		<button class="btn-primary" ng-click="goNext()" type="button">Next Page</button>
+		<canvas id="the-canvas" style="border:1px solid black;" pdf-canvas="pageNum" />
 	</div>
 	<div class="span2" ng-controller="CommentCtrl">
 		[<a href="#/permissions">Edit Permissions and Manage Users</a>]
@@ -25,4 +28,4 @@
 		</div>
     </div>
 </div>
-<script type="text/javascript" src="apdf.js/examples/helloworld/hello.js"></script>
+<script type="text/javascript" src="js/pdfRender.js"></script>
