@@ -81,7 +81,7 @@ function FileCtrl($scope, $location, File) {
 }
 
 function PdfCtrl($scope, $location){
-	$scope.pdfUrl = '/api/pdf/tracemonkey.pdf';//'http://cdn.mozilla.net/pdfjs/tracemonkey.pdf';
+	$scope.pdfUrl = 'api/pdf/tracemonkey.pdf';//'http://cdn.mozilla.net/pdfjs/tracemonkey.pdf';
 	PDFJS.disableWorker = true; //disable cross-site origin issue
 	$scope.pageNum = -1
 	$scope.scale = 1.4
