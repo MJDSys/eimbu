@@ -1,12 +1,15 @@
 <div class="row-fluid">
-	<div class="span2"><h2>Permissions</h2>
+	<div class="span4"><h2>Permissions</h2>
 		<div ng-controller="PermissionCtrl">
-		  <ul class="unstyled">
-			<li ng-repeat="permission in permissions">
-				<input type="checkbox" ng-model="permission.enabled">
-				{{permission.displayName}}
-			</li>
-		  </ul>
+			<ul class="unstyled">
+				<li ng-repeat="permission in permissions">
+					<input type="checkbox" ng-model="permission.enabled">
+					{{permission.displayName}}
+				</li>
+			</ul>
+			<form ng-submit="goBack()">
+				<input class="btn-primary btn-large" type="submit" value="Go Back">
+			</form>
 		</div>
     </div>
 	<div class="span2"><h2>Users</h2>

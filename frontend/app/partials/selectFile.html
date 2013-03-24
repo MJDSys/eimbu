@@ -7,8 +7,8 @@
 			<ul class="unstyled">
 				<li ng-repeat="file in files">
 					<div ng-switch on="file.isDirectory" >
-						<a ng-switch-when="true" href={{"#select/"+file.id}}><i class="icon-folder-open"></i>{{file.name}}</a>
-						<a ng-switch-default href={{"#select/"+file.id}}><i class="icon-file"></i>{{file.name}}</a>
+						<a ng-switch-when="true" href={{"#/select/"+file.id}}><i class="icon-folder-open"></i>{{file.name}}</a>
+						<a ng-switch-default href={{"#/view/"+file.id}}><i class="icon-file"></i>{{file.name}}</a>
 					</div>
 				</li>
 			</ul>

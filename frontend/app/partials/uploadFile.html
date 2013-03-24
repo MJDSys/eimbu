@@ -1,15 +1,13 @@
 <div class="row-fluid">
-	<div class="span2"><h2>Permissions</h2>
-		<div ng-controller="PermissionCtrl">
-		  <ul class="unstyled">
-			<li ng-repeat="permission in permissions">
-				<input type="checkbox" ng-model="permission.enabled">
-				{{permission.displayName}}
-			</li>
-		  </ul>
+	<div class="span4"><h2>Permissions</h2>
+		<div ng-controller="FileCtrl">
+			<form ng-submit="uploadFile">
+				<p>Upload a file from your computer</p>
+				<input type="file"></input>
+			</form>
 		</div>
     </div>
-	<div class="span2"><h2>Users</h2>
+	<div class="span4"><h2>Users</h2>
 		<div ng-controller="UserCtrl">
 			<span>{{users.length}} can view and make comments</span>
 			<form ng-submit="addUser()">

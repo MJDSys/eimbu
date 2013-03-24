@@ -2,8 +2,10 @@
 	<div class="span6 offset2">
 		<canvas id="the-canvas" style="border:1px solid black;"/>
 	</div>
-	<div class="span2"><h2>Comments</h2>
-		<div ng-controller="CommentCtrl">
+	<div class="span2" ng-controller="CommentCtrl">
+		[<a href="/#/permissions/">Edit Permissions and Manage Users</a>]
+		<h2>Comments</h2>
+		<div>
 		  <span>{{comments.length}} comments {{replies()}} replies</span>
 		  [<a href="" ng-click="refresh()">refresh</a>]
 		  <form ng-submit="addComment()">
@@ -23,4 +25,4 @@
 		</div>
     </div>
 </div>
-  <script type="text/javascript" src="apdf.js/examples/helloworld/hello.js"></script>
+<script type="text/javascript" src="apdf.js/examples/helloworld/hello.js"></script>

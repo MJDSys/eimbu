@@ -18,7 +18,7 @@ angular.module('myApp.controllers', []).
 	}]);
 
 
-function CommentCtrl($scope, Comment) {
+function CommentCtrl($scope, $location, Comment) {
 	$scope.comments = Comment.query();
 	$scope.addComment = function() {
 		$scope.todos.push({text:$scope.commentText, done:false});
@@ -35,13 +35,20 @@ function CommentCtrl($scope, Comment) {
 	$scope.refresh = function() {
 		$scope.comments = Comment.query();
 	};
+	$scope.editPermissions = function() {
+		$location.path('/permissions/');
+	};
 }
 
-function PermissionCtrl($scope, Permission) {
+function PermissionCtrl($scope, $location, Permission) {
 	$scope.permissions = Permission.query();
+	
+	$scope.goBack = function() {
+		$location.path('/view/');
+	};
 }
 
-function UserCtrl($scope, User) {
+function UserCtrl($scope, $location, User) {
 	$scope.users = User.query();
 	
 	$scope.addUser = function() {
@@ -52,7 +59,10 @@ function UserCtrl($scope, User) {
 function UploadCtrl($scope) {
 }
 
-function FileCtrl($scope, File) {
+function FileCtrl($scope, $location, File) {
 	$scope.files = File.query();
+	$scope.goBack = function() {
+		$location.path('/permissions/');
+	};
 	//$location.path('/select/critiquepaper/');
 }
