@@ -64,5 +64,18 @@ function FileCtrl($scope, $location, File) {
 	$scope.goBack = function() {
 		$location.path('/permissions/');
 	};
+	$scope.goUpload = function(){
+		$location.path('/upload');
+	};
+	$scope.uploadFile = function(){
+		var id = 123;//use file id returned from server
+		$location.path('/view/'+id);
+	};
+	$scope.selectFile = function(id){
+		$location.path('/view/'+id);
+	};
+	$scope.selectFolder = function(id){
+		$location.path('/upload/'+id);
+	};
 	//$location.path('/select/critiquepaper/');
 }

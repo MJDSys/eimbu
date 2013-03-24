@@ -1,13 +1,34 @@
+<h2>Select a file from your computer, or Google Drive</h2>
 <div class="row-fluid">
-	<div class="span4"><h2>Permissions</h2>
+	<div class="span4"><h2>Upload File</h2>
 		<div ng-controller="FileCtrl">
-			<form ng-submit="uploadFile">
-				<p>Upload a file from your computer</p>
-				<input type="file"></input>
+			<form ng-submit="uploadFile()">
+				<p>Upload a paper from your computer</p>
+				<input type="file">
+				<span class="help-block">Paper must be a .pdf</span>
+				<input class="btn-primary btn-large" type="submit" value="upload">
 			</form>
 		</div>
     </div>
-	<div class="span4"><h2>Users</h2>
+	<div class="span4"><h2>Use Google Drive file</h2>
+		<div ng-controller="FileCtrl">
+			<ul class="unstyled">
+				<li ng-repeat="file in files">
+					<div ng-switch on="file.isDirectory" >
+						<div ng-switch-when="true">
+						<a ng-click={{"selectFolder("+file.id+")"}}><i class="icon-folder-open"></i>{{file.name}}</a>
+						</div>
+						<div ng-switch-default>
+						<a ng-click={{"selectFile("+file.id+")"}}><i class="icon-file"></i>{{file.name}}</a>
+						</div>
+						<!--<a ng-click="selectFile(21421431)" class="ng-scope ng-binding"><i class="icon-file"></i>Test</a>-->
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="span8 offset2">
+		<h2>Invite others to read and comment on the paper</h2>
 		<div ng-controller="UserCtrl">
 			<span>{{users.length}} can view and make comments</span>
 			<form ng-submit="addUser()">

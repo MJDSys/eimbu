@@ -14,8 +14,8 @@
 			</ul>
 		</div>
     </div>
-	<div class="span2">
-		<form ng-submit="uploadFile()">
+	<div class="span2" ng-controller="FileCtrl">
+		<form ng-submit="goUpload()">
 			<input class="btn-primary btn-large" type="submit" value="Upload New File">
 		</form>
 	</div>
