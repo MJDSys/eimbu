@@ -29,8 +29,10 @@ angular.module('myApp.directives', []).
 					page.render(renderContext).then(function(){
 						angular.forEach(scope.comments,function(comment){
 							angular.forEach(comment.anchor,function(anchor){
-								ctx.fillStyle = 'red';
-								ctx.fillRect(anchor.x, anchor.y, anchor.w, anchor.h);
+								if (pageNum == anchor.p) {
+									ctx.fillStyle = 'red';
+									ctx.fillRect(anchor.x, anchor.y, anchor.w, anchor.h);
+								}
 							});
 						});
 					});
