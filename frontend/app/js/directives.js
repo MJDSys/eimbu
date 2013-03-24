@@ -26,7 +26,13 @@ angular.module('myApp.directives', []).
 						canvasContext: ctx,
 						viewport: viewport
 					};
-					page.render(renderContext);
+					page.render(renderContext).then(function(){
+						angular.forEach(scope.comments,function(comment){
+							//count+=comment.replies.length
+						ctx.fillStyle = 'red';
+						ctx.fillRect(30, 30, 50, 50);
+						});
+					});
 				});
 			}
 			
