@@ -35,4 +35,13 @@ body {
 
 div.container-fluid {
 	max-width: 1300px;
+	margin: auto;
+}
+
+ul.comments {
+	background-color: rgb(240, 240, 240);
+	padding: 5px;
+	border-width: 2px;
+	border-color: rgb(220, 220, 220);
+	border-style: solid;
 }

@@ -6,7 +6,7 @@
 		"picture": "//ssl.gstatic.com/s2/profiles/images/silhouette96.png",
 		"text": "Comments are great",
 		"status": "open",
-		"anchor": [ {"x": 50, "y": 30, "w":10, "h":10}],
+		"anchor": [ {"p": 1, "x": 50, "y": 30, "w":10, "h":10}],
 		"replies":[
 		{
 			"id": "1234131",
