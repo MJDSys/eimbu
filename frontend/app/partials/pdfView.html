@@ -15,7 +15,7 @@
 			<input type="text" ng-model="commentText"  size="30" placeholder="new comment">
 			<input class="btn-primary" type="submit" value="add">
 		  </form>
-		  <ul class="unstyled">
+		  <ul class="unstyled comments">
 			<li ng-repeat="comment in comments">
 				<img src={{comment.picture}} alt={{reply.name}} width=64 height=64 />{{comment.text}}
 				<ul>
