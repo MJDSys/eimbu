@@ -2,26 +2,26 @@
 
 /* Services */
 
-angular.module('emibu.services', ['ngResource'])
+angular.module('myApp.services', ['ngResource'])
     .value('version', '0.1')
 	.factory('Comment', function($resource){
 		return $resource('api/comments.json', {}, {
-			query: {method:'GET', params:{phoneId:'comments'}, isArray:true}
+			query: {method:'GET', params:{}, isArray:true}
 		});})
 
 	.factory('User', function($resource){
 		return $resource('api/users.json', {}, {
-			query: {method:'GET', params:{phoneId:'users'}, isArray:true}
+			query: {method:'GET', params:{}, isArray:true}
 		});})
 
 	.factory('File', function($resource){
 		return $resource('api/files.json', {}, {
-			query: {method:'GET', params:{phoneId:'files'}, isArray:true}
+			query: {method:'GET', params:{}, isArray:true}
 		});})
 
 	.factory('Permission', function($resource){
 		return $resource('api/permissions.json', {}, {
-			query: {method:'GET', params:{phoneId:'permissions'}, isArray:true}
+			query: {method:'GET', params:{}, isArray:true}
 		});
 	})
 

@@ -3,7 +3,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function() {
-	beforeEach(module('emibu.services'));
+	beforeEach(module('myApp.services'));
 
 	var $httpBackend;
 

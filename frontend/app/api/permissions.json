@@ -1,0 +1,5 @@
+[{
+	"name": "publicComment",
+	"enabled": false,
+	"displayName": "Allow users to see all other user's comments"
+}]

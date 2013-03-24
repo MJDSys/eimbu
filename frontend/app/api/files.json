@@ -1,0 +1,14 @@
+[
+	{
+		"id": "21421431",
+		"name": "document.txt",
+		"mimetype": "text",
+		"isDirectory": false
+	},
+	{
+		"id": "221311421431",
+		"name": "subfolder",
+		"mimetype": "folder",
+		"isDirectory": true
+	}
+]
