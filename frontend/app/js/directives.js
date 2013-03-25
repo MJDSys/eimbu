@@ -30,7 +30,7 @@ angular.module('myApp.directives', []).
 						angular.forEach(scope.comments,function(comment){
 							angular.forEach(comment.anchor,function(anchor){
 								if (pageNum == anchor.p) {
-									ctx.fillStyle = 'red';
+									ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
 									ctx.fillRect(anchor.x, anchor.y, anchor.w, anchor.h);
 								}
 							});
