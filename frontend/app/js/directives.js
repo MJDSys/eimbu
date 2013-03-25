@@ -66,20 +66,12 @@ angular.module('myApp.directives', []).
 				scope.add_comment({
 					"id": "123131313131",
 					"createdDate": "2013-03-22T22:06:56.848Z",
-					"name": "Nathan Jervis",
+					"name": "Matthew Dawson",
 					"picture": "//ssl.gstatic.com/s2/profiles/images/silhouette96.png",
-					"text": "Comments are great",
+					"text": "Test Comment Creation",
 					"status": "open",
 					"anchor": [ {"p": pageNum, "x": down.x, "y": down.y, "w":x - down.x, "h":y - down.y}],
-					"replies":[
-					{
-						"id": "1234131",
-						"createdDate": "2013-03-22T22:06:56.848Z",
-						"name": "STEVE Jervis",
-						"picture": "//ssl.gstatic.com/s2/profiles/images/silhouette96.png",
-						"text": "So are SUPER awesome replies"
-					}
-					]
+					"replies":[]
 				});
 				//});
 				renderPdf(pageNum);
