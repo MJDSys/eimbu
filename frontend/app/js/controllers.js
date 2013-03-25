@@ -20,8 +20,30 @@ angular.module('myApp.controllers', []).
 
 function CommentCtrl($scope, $location, Comment) {
 	$scope.comments = Comment.query();
+/*	Comment.query().success(function(res) {
+		angular.forEach(res,function(comment){
+			$scope.comments.push(comment);
+		});
+	});*/
 	$scope.addComment = function() {
-		$scope.todos.push({text:$scope.commentText, done:false});
+		$scope.comments.push({
+			"id": "123131313131",
+			"createdDate": "2013-03-22T22:06:56.848Z",
+			"name": "Nathan Jervis",
+			"picture": "//ssl.gstatic.com/s2/profiles/images/silhouette96.png",
+			"text": "Comments are great",
+			"status": "open",
+			"anchor": [ {"p": 1, "x": 20, "y": 20, "w":200, "h":200}],
+			"replies":[
+			{
+				"id": "1234131",
+				"createdDate": "2013-03-22T22:06:56.848Z",
+				"name": "STEVE Jervis",
+				"picture": "//ssl.gstatic.com/s2/profiles/images/silhouette96.png",
+				"text": "So are SUPER awesome replies"
+			}
+			]
+		});
 		$scope.commentText = '';
 	};
 	$scope.replies = function(){
@@ -60,6 +82,14 @@ function CommentCtrl($scope, $location, Comment) {
 			$scope.pageNum = 1;
 		});
 	});
+	$scope.add_comment = function(comment) {
+		$scope.$apply(function() {
+		console.log($scope.comments.length);
+		//$scope.comments.append(comment);
+		$scope.comments.push(comment)
+		console.log($scope.comments);
+		});
+	}
 }
 
 function PermissionCtrl($scope, $location, Permission) {
