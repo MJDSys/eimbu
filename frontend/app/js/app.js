@@ -1,8 +1,7 @@
 'use strict';
 
-
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['myApp.controllers', 'myApp.filters', 'myApp.services', 'myApp.directives']).
+angular.module('eimbu', ['eimbu.controllers', 'eimbu.filters', 'eimbu.services', 'eimbu.directives']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/view/:fileID', {templateUrl: 'partials/pdfView.html', controller: 'MyCtrl1'});
     $routeProvider.when('/permissions', {templateUrl: 'partials/permissions.html', controller: 'MyCtrl2'});

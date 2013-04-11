@@ -2,8 +2,7 @@
 
 /* Controllers */
 
-
-angular.module('myApp.controllers', []).
+angular.module('eimbu.controllers', []).
 	controller('MyCtrl1', ['$scope', function($scope) {
 		$scope.one = 1;
 	}]).
@@ -16,7 +15,6 @@ angular.module('myApp.controllers', []).
 	controller('MyCtrl4', ['$scope', function($scope) {
 		$scope.four = 4;
 	}]);
-
 
 function CommentCtrl($scope, $location, Comment) {
 	$scope.comments = Comment.query();
