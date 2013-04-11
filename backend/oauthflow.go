@@ -16,7 +16,7 @@ var token string
 
 type oauthFlowHandler struct{}
 
-func (h oauthFlowHandler) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) interface{} {
+func (h oauthFlowHandler) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) {
 	config := &oauth.Config{
 		ClientId:     "631158609582.apps.googleusercontent.com",
 		ClientSecret: "64Ep6yXSLIZX9uT7jSoD6_Ue",
@@ -60,5 +60,4 @@ func (h oauthFlowHandler) serveHTTP(w http.ResponseWriter, r *http.Request, matc
 		// Write the response to standard output.
 		io.Copy(w, r.Body)
 	}
-	return 5
 }

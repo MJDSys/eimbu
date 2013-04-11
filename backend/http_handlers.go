@@ -44,13 +44,13 @@ type HttpHandlerRestHandler struct {
 	Handler interface{}
 }
 
-func (h HttpHandlerRestHandler) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) interface{} {
+func (h HttpHandlerRestHandler) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) {
 	switch r.Method {
 	case "GET":
 		if id, ok := matches["id"]; ok == true {
-			return h.Handler.(RestHandlerGet).Get(id)
+			h.Handler.(RestHandlerGet).Get(id)
 		} else {
-			return h.Handler.(RestHandlerList).List()
+			h.Handler.(RestHandlerList).List()
 		}
 		break
 	default:

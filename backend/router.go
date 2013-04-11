@@ -12,7 +12,7 @@ import (
 )
 
 type MatchedHttpHandler interface {
-	serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) interface{}
+	serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string)
 }
 
 type regexPath struct {
