@@ -1,4 +1,9 @@
 <div class="row-fluid">
+	<div class="span2" ng-controller="FileCtrl">
+		<form ng-submit="goUpload()">
+			<input class="btn-primary btn-large" type="submit" value="Upload New File">
+		</form>
+	</div>
 	<div class="span4 offset2"><h2>Files</h2>
 		<div ng-controller="FileCtrl">
 			<span>{{files.length}} files</span>
@@ -13,10 +18,5 @@
 				</li>
 			</ul>
 		</div>
-    </div>
-	<div class="span2" ng-controller="FileCtrl">
-		<form ng-submit="goUpload()">
-			<input class="btn-primary btn-large" type="submit" value="Upload New File">
-		</form>
 	</div>
 </div>
