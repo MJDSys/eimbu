@@ -9,3 +9,8 @@ Building
 3. Install the GoAuth2 OAuth library (go get code.google.com/p/goauth2/oauth)
 4. Compile the backend (in backend/ run: go build)
 
+Running the front-end
+---------------------
+
+1. From the frontend/app directory, run: python -m SimpleHTTPServer
+2. Go to http://localhost:8000 in your browser
