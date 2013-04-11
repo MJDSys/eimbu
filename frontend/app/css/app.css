@@ -45,3 +45,13 @@ ul.comments {
 	border-color: rgb(220, 220, 220);
 	border-style: solid;
 }
+
+i.icon-folder-open {
+	background-image:url('../img/folder.png');
+	background-position:0;
+}
+
+i.icon-file {
+	background-image:url('../img/document.png');
+	background-position:0;
+}
