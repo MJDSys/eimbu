@@ -181,14 +181,14 @@ describe('service', function() {
 			expect(promise_resolved).toEqual(true);
 		}
 
-		it('Test setup and send/receive message', inject(function($rootScope, $httpBackend, ServerSocket) {
-			preform_test($rootScope, $httpBackend, ServerSocket);
-		}));
+		it('Test setup and send/receive message', function() {
+			inject(preform_test);
+		});
 
-		it('Test setup and send/receive message (delay response)', inject(function($rootScope, $httpBackend, ServerSocket) {
+		it('Test setup and send/receive message (delay response)', function() {
 			MySocket._delay_response = true;
-			preform_test($rootScope, $httpBackend, ServerSocket);
-		}));
+			inject(preform_test);
+		});
 	});
 
 	describe('authentication', function() {
