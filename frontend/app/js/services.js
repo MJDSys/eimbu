@@ -50,15 +50,17 @@ angular.module('eimbu.services', ['ngResource'])
 		};
 	}).
 
-	factory('ServerSocket', function(WebSocketWrapper, $rootScope, $q) {
-		var socket = WebSocketWrapper('ws://localhost:8080/ws').then(function(socket) {
-			return socket;
+	factory('ServerSocket', function(WebSocketWrapper, $rootScope, $q, $http) {
+		var socket_p = $http.post('api/generate_cookie').then(function() {
+			return WebSocketWrapper('ws://localhost:8080/ws').then(function(socket) {
+				return socket;
+			});
 		});
 
 		var messages_in_transit = {}
 		var cur_msg_id = 0;
 
-		socket.then(function(socket) {
+		socket_p.then(function(socket) {
 			socket.onmessage = function(data) {
 				var data = JSON.parse(data);
 				var deferred = messages_in_transit[data.msg_id];
@@ -71,7 +73,7 @@ angular.module('eimbu.services', ['ngResource'])
 		return {
 			send: function(op, op_path, data) {
 				var deferred = $q.defer();
-				socket.then(function(socket){
+				socket_p.then(function(socket){
 					var data_to_send = {
 						'msg_id': cur_msg_id++,
 						'op': op,

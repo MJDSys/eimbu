@@ -114,7 +114,7 @@ describe('service', function() {
 			module(function ($provide) {
 				$provide.value('WebSocket$', WebSocket$);
 			});
-			inject(function($q) {
+			inject(function($q, $httpBackend) {
 				MySocket = {
 					onopen: null,
 					onclose: null,
@@ -156,11 +156,15 @@ describe('service', function() {
 						}
 					}
 				}
+				$httpBackend.when('POST', 'api/generate_cookie').respond(function() {
+					return [200];
+				});
+				$httpBackend.expectPOST('api/generate_cookie');
 			});
 		});
 
-		it('Test setup and send/receive message', inject(function($rootScope, ServerSocket) {
-			MySocket.Connect();
+		//Move test logic here, to avoid unncessary duplication.
+		function preform_test($rootScope, $httpBackend, ServerSocket) {
 			var my_data = {test: "YES", awesome: "always", scale: 1.0};
 			var promise = ServerSocket.send("ECHO", "ECHO_PATH", my_data);
 			var promise_resolved = false;
@@ -169,23 +173,21 @@ describe('service', function() {
 				expect(data).toEqual(my_data);
 				promise_resolved = true;
 			});
+
+			$httpBackend.flush();
+			$rootScope.$digest();
+			MySocket.Connect();
 			$rootScope.$digest();
 			expect(promise_resolved).toEqual(true);
+		}
+
+		it('Test setup and send/receive message', inject(function($rootScope, $httpBackend, ServerSocket) {
+			preform_test($rootScope, $httpBackend, ServerSocket);
 		}));
 
-		it('Test setup and send/receive message (delay response)', inject(function($rootScope, ServerSocket) {
+		it('Test setup and send/receive message (delay response)', inject(function($rootScope, $httpBackend, ServerSocket) {
 			MySocket._delay_response = true;
-			MySocket.Connect();
-			var my_data = {test: "YES", awesome: "always", scale: 2.0};
-			var promise = ServerSocket.send("ECHO", "ECHO_PATH", my_data);
-			var promise_resolved = false;
-
-			promise.then(function(data) {
-				expect(data).toEqual(my_data);
-				promise_resolved = true;
-			});
-			$rootScope.$digest();
-			expect(promise_resolved).toEqual(true);
+			preform_test($rootScope, $httpBackend, ServerSocket);
 		}));
 	});
 
