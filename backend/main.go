@@ -20,7 +20,7 @@ func main() {
 	regexHandler.Handle("/test/", HttpHandlerRestHandler{5})
 	regexHandler.Handle("/test/{id}", HttpHandlerRestHandler{5})
 
-	regexHandler.Handle("/ses/{request}", oauthFlowHandler{})
+	regexHandler.Handle("/api/ses/{request}", oauthFlowHandler{})
 
 	panic(http.ListenAndServe("localhost:8080", http.DefaultServeMux))
 }
