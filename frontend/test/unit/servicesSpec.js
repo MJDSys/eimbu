@@ -25,6 +25,84 @@ describe('service', function() {
 		});
 	});
 
+	describe('WebSocket Wrapper', function() {
+		var WebSocket$ = null;
+		var MySocket = null;
+
+		beforeEach(function() {
+			MySocket = {
+				onopen: null,
+				onclose: null,
+				onerror: null,
+				onmessage: null,
+
+				ConnectSucceed: function() {
+					if(this.onopen) {
+						this.onopen();
+					}
+				},
+				ConnectFailureNoError: function() {
+					if(this.onclose) {
+						this.onclose({ error: 0 });
+					}
+				},
+				ConnectFailureWithError: function() {
+					if(this.onerror) {
+						this.onerror();
+					}
+					if(this.onclose) {
+						this.onclose({ error: 1 });
+					}
+				}
+			}
+			WebSocket$ = function() {
+				return MySocket;
+			}
+			module(function ($provide) {
+				$provide.value('WebSocket$', WebSocket$);
+			});
+		});
+
+		function verify_socket_handlers_are_null() {
+			expect(MySocket.onopen).toEqual(null);
+			expect(MySocket.onerror).toEqual(null);
+			expect(MySocket.onclose).toEqual(null);
+			expect(MySocket.onmessage).toEqual(null);
+		}
+
+		it('Test getting socket from sucessful connection.', inject(function($rootScope, WebSocketWrapper){
+			var socket_p = WebSocketWrapper('ws://localhost');
+			socket_p.then(function(socket) {
+				expect(socket).toEqual(MySocket); //Test harness should make this true.  Make sure the assumption doesn't break later.  If false, verify_socket_handlers_are_null will not check what it should!
+
+				verify_socket_handlers_are_null();
+			}, function() {
+				this.fail('Should have resolved the connection!');
+			});
+			MySocket.ConnectSucceed();
+		}));
+		it('Test failing connection, without calling on error.', inject(function($rootScope, WebSocketWrapper){
+			var socket_p = WebSocketWrapper('ws://localhost');
+			socket_p.then(function(socket) {
+				this.fail('Connection should have failed!');
+			}, function(error) {
+				expect(error).toNotEqual(null);
+				verify_socket_handlers_are_null();
+			});
+			MySocket.ConnectFailureNoError();
+		}));
+		it('Test failing connection, with calling on error.', inject(function($rootScope, WebSocketWrapper){
+			var socket_p = WebSocketWrapper('ws://localhost');
+			socket_p.then(function(socket) {
+				this.fail('Connection should have failed!');
+			}, function(error) {
+				expect(error).toNotEqual(null);
+				verify_socket_handlers_are_null();
+			});
+			MySocket.ConnectFailureWithError();
+		}));
+	});
+
 	describe('authentication', function() {
 		var authServer;
 

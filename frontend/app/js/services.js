@@ -27,9 +27,9 @@ angular.module('myApp.services', ['ngResource'])
 
 	factory('WebSocket$', function(){ if(WebSocket){  return WebSocket; } else { return null; } }).
 
-	factory('websockets', function($rootScope, $q) {
+	factory('WebSocketWrapper', function($rootScope, $q, WebSocket$) {
 		return function(url, protocols) {
-			var socket = new WebSocket(url, protocols);
+			var socket = new WebSocket$(url, protocols);
 			var deferred = $q.defer();
 
 			socket.onopen = function() {
@@ -40,6 +40,7 @@ angular.module('myApp.services', ['ngResource'])
 			}
 			socket.onclose = socket.onerror = function() {
 				$rootScope.$apply(function() {
+					socket.onerror = socket.onclose = socket.onopen = null;
 					socket = null;
 					deferred.reject('Failed to open socket!');
 				});
