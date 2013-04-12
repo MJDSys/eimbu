@@ -3,7 +3,7 @@
 /* jasmine specs for controllers go here */
 
 describe('controllers', function () {
-  beforeEach(module('myApp.controllers'));
+  beforeEach(module('eimbu.controllers'));
   
   describe('MyCtrl1', function() {
    it('should have the $scope.one set to 1', inject(function($rootScope, $controller) {
