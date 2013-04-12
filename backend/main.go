@@ -12,7 +12,6 @@ func main() {
 	if !flag.Parsed() {
 		flag.Parse()
 	}
-	var regexHandler = NewHttpHandlerRegexMatcher()
 
 	http.Handle("/", http.StripPrefix(*prefix, regexHandler))
 

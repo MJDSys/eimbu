@@ -25,6 +25,8 @@ type HttpHandlerRegexMatcher struct {
 	paths []regexPath
 }
 
+var regexHandler = NewHttpHandlerRegexMatcher()
+
 func NewHttpHandlerRegexMatcher() *HttpHandlerRegexMatcher {
 	return &HttpHandlerRegexMatcher{}
 }
