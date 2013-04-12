@@ -6,7 +6,7 @@ Building
 
 1. Ensure you have Go installed (http://golang.org/doc/install)
 2. Create a Go build environment (http://golang.org/doc/code.html#GOPATH)
-3. Install the GoAuth2 OAuth library (go get code.google.com/p/goauth2/oauth)
+3. Change in the backend folder and run go get to fetch the various dependencies.
 4. Compile the backend (in backend/ run: go build)
 
 Running the front-end
