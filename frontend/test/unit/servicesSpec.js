@@ -5,12 +5,6 @@
 describe('service', function() {
 	beforeEach(module('myApp.services'));
 
-	var $httpBackend;
-
-	beforeEach(inject(function($injector) {
-		$httpBackend = $injector.get('$httpBackend');
-	}));
-
 	describe('version', function() {
 		it('should return current version', inject(function(version) {
 			expect(version).toEqual('0.1');
@@ -20,7 +14,7 @@ describe('service', function() {
 	describe('authentication', function() {
 		var authServer;
 
-		beforeEach(inject(function($injector) {
+		beforeEach(inject(function($injector, $httpBackend) {
 			authServer = {
 				hasToken: false
 			};
@@ -35,7 +29,7 @@ describe('service', function() {
 			});
 		}));
 
-		it('verifies user initially not logged in gets url.', inject(function(authentication, $rootScope) {
+		it('verifies user initially not logged in gets url.', inject(function(authentication, $rootScope, $httpBackend) {
 			$httpBackend.expectGET('api/ses/verify_session');
 
 			authentication.verify_session().then(function(result) {
@@ -46,7 +40,7 @@ describe('service', function() {
 			$rootScope.$digest();
 		}));
 
-		it('verifies user logged in is fine.', inject(function(authentication, $rootScope) {
+		it('verifies user logged in is fine.', inject(function(authentication, $rootScope, $httpBackend) {
 			authServer.hasToken = true;
 			$httpBackend.expectGET('api/ses/verify_session');
 
@@ -65,7 +59,7 @@ describe('service', function() {
 		var $window;
 		var authenticationResolveVerifier;
 
-		beforeEach(inject(function($injector) {
+		beforeEach(inject(function($injector, $httpBackend) {
 			authServer = {
 				hasToken: false
 			};
@@ -91,7 +85,7 @@ describe('service', function() {
 			authenticationResolveVerifier = $injector.get('authenticationResolveVerifier');
 		}));
 
-		it('verifies redirection when user not logged in..', inject(function(authentication, $rootScope, $q) {
+		it('verifies redirection when user not logged in..', inject(function(authentication, $rootScope, $q, $httpBackend) {
 			$httpBackend.expectGET('api/ses/verify_session');
 
 			authenticationResolveVerifier($q, $window, authentication).then(function() {
@@ -104,7 +98,7 @@ describe('service', function() {
 			$rootScope.$digest();
 		}));
 
-		it('verifies user logged in is fine.', inject(function(authentication, $rootScope, $q) {
+		it('verifies user logged in is fine.', inject(function(authentication, $rootScope, $q, $httpBackend) {
 			authServer.hasToken = true;
 			$httpBackend.expectGET('api/ses/verify_session');
 
