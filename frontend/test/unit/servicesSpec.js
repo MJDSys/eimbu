@@ -11,6 +11,20 @@ describe('service', function() {
 		}));
 	});
 
+	describe('DOM Websocket Injector', function() {
+		it('should return the DOM Websocket consturctor (if implemented in the browser)', function() {
+			if(WebSocket) {
+				inject(function(WebSocket$) {
+					expect(WebSocket$).toEqual(WebSocket);
+				});
+			} else {
+				inject(function(WebSocket$) {
+					expect(WebSocket$).toEqual(null);
+				});
+			}
+		});
+	});
+
 	describe('authentication', function() {
 		var authServer;
 

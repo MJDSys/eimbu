@@ -25,6 +25,8 @@ angular.module('myApp.services', ['ngResource'])
 		});
 	}).
 
+	factory('WebSocket$', function(){ if(WebSocket){  return WebSocket; } else { return null; } }).
+
 	factory('websockets', function($rootScope, $q) {
 		return function(url, protocols) {
 			var socket = new WebSocket(url, protocols);
