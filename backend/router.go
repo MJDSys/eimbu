@@ -60,6 +60,21 @@ func (h *HttpHandlerRegexMatcher) Handle(path string, handler MatchedHttpHandler
 	h.paths = append(h.paths, regexPath{regexp.MustCompile(path_regexp), matches, handler})
 }
 
+type RegularHandlar func(w http.ResponseWriter, r *http.Request, matches map[string]string)
+func (h RegularHandlar) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) {
+	h(w, r, matches)
+}
+
+func (h *HttpHandlerRegexMatcher) HandleFunc(path string, handler RegularHandlar) {
+	h.Handle(path, RegularHandlar(handler))
+}
+
+func (h *HttpHandlerRegexMatcher) HandleRegularHandler(path string, handler http.Handler) {
+	h.HandleFunc(path, func (w http.ResponseWriter, r *http.Request, matches map[string]string) {
+		handler.ServeHTTP(w, r)
+	})
+}
+
 func (h *HttpHandlerRegexMatcher) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	found := false
 	fmt.Printf("%v\n", r.URL.Path)
