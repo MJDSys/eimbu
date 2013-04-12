@@ -23,9 +23,31 @@ angular.module('myApp.services', ['ngResource'])
 		return $resource('api/permissions.json', {}, {
 			query: {method:'GET', params:{}, isArray:true}
 		});
-	})
+	}).
 
-	.service('authentication', function($http) {
+	factory('websockets', function($rootScope, $q) {
+		return function(url, protocols) {
+			var socket = new WebSocket(url, protocols);
+			var deferred = $q.defer();
+
+			socket.onopen = function() {
+				$rootScope.$apply(function() {
+					socket.onerror = socket.onclose = socket.onopen = null;
+					deferred.resolve(socket);
+				});
+			}
+			socket.onclose = socket.onerror = function() {
+				$rootScope.$apply(function() {
+					socket = null;
+					deferred.reject('Failed to open socket!');
+				});
+			}
+
+			return deferred.promise;
+		};
+	}).
+
+	service('authentication', function($http) {
 		this.verify_session = function() {
 			return $http.get("api/ses/verify_session").then(function(res) {
 				return res.data;
