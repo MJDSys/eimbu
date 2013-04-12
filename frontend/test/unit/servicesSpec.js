@@ -103,6 +103,92 @@ describe('service', function() {
 		}));
 	});
 
+	describe('ServerSocket', function() {
+		var WebSocket$ = null;
+		var MySocket = null;
+
+		beforeEach(function() {
+			WebSocket$ = function() {
+				return MySocket;
+			}
+			module(function ($provide) {
+				$provide.value('WebSocket$', WebSocket$);
+			});
+			inject(function($q) {
+				MySocket = {
+					onopen: null,
+					onclose: null,
+					onerror: null,
+					onmessage: null,
+
+					_delay_response: false,
+
+					send: function(data) {
+						// Echo server.  Reflects data back regardless of data.  OP: ECHO PATH: ECHO_PATH
+						var data_o = JSON.parse(data);
+						expect(data_o.op).toEqual("ECHO");
+						expect(data_o.op_path).toEqual("ECHO_PATH");
+
+						var response = JSON.stringify({msg_id: data_o.msg_id, data: data_o.data});
+
+						self = this;
+						var sendResponse = function() {
+							if(self.onmessage) {
+								self.onmessage(response);
+							}
+						}
+						if(this._delay_response) {
+							//This trick cause a delayed response.  Not using setTimeout to avoid having to actual give up control.
+							var d = $q.defer();
+							d.resolve();
+							d.promise.then(sendResponse);
+						} else {
+							sendResponse();
+						}
+					},
+
+					_connected: false,
+
+					Connect: function() {
+						this._connected = true;
+						if(this.onopen) {
+							this.onopen();
+						}
+					}
+				}
+			});
+		});
+
+		it('Test setup and send/receive message', inject(function($rootScope, ServerSocket) {
+			MySocket.Connect();
+			var my_data = {test: "YES", awesome: "always", scale: 1.0};
+			var promise = ServerSocket.send("ECHO", "ECHO_PATH", my_data);
+			var promise_resolved = false;
+
+			promise.then(function(data) {
+				expect(data).toEqual(my_data);
+				promise_resolved = true;
+			});
+			$rootScope.$digest();
+			expect(promise_resolved).toEqual(true);
+		}));
+
+		it('Test setup and send/receive message (delay response)', inject(function($rootScope, ServerSocket) {
+			MySocket._delay_response = true;
+			MySocket.Connect();
+			var my_data = {test: "YES", awesome: "always", scale: 2.0};
+			var promise = ServerSocket.send("ECHO", "ECHO_PATH", my_data);
+			var promise_resolved = false;
+
+			promise.then(function(data) {
+				expect(data).toEqual(my_data);
+				promise_resolved = true;
+			});
+			$rootScope.$digest();
+			expect(promise_resolved).toEqual(true);
+		}));
+	});
+
 	describe('authentication', function() {
 		var authServer;
 

@@ -50,6 +50,42 @@ angular.module('eimbu.services', ['ngResource'])
 		};
 	}).
 
+	factory('ServerSocket', function(WebSocketWrapper, $rootScope, $q) {
+		var socket = WebSocketWrapper('ws://localhost:8080/ws').then(function(socket) {
+			return socket;
+		});
+
+		var messages_in_transit = {}
+		var cur_msg_id = 0;
+
+		socket.then(function(socket) {
+			socket.onmessage = function(data) {
+				var data = JSON.parse(data);
+				var deferred = messages_in_transit[data.msg_id];
+				if(deferred) {
+					deferred.resolve(data.data);
+				}
+			};
+		});
+
+		return {
+			send: function(op, op_path, data) {
+				var deferred = $q.defer();
+				socket.then(function(socket){
+					var data_to_send = {
+						'msg_id': cur_msg_id++,
+						'op': op,
+						'op_path': op_path,
+						'data': data
+					}
+					messages_in_transit[data_to_send.msg_id] = deferred;
+					socket.send(JSON.stringify(data_to_send));
+				});
+				return deferred.promise;
+			}
+		};
+	}).
+
 	service('authentication', function($http) {
 		this.verify_session = function() {
 			return $http.get("api/ses/verify_session").then(function(res) {
