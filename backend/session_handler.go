@@ -10,12 +10,15 @@ type SessionStorage interface {
 }
 
 type SessionStorageInitializer interface {
-	New() SessionStorage
+	New(key string) SessionStorage
+	Retreive(key string) SessionStorage
 }
 
 type SessionsStore interface {
 	NewSessionIdentifier() string
 	VerifySessionIdentifier(key string) bool
+
+	GetSessionStorageFor(key string) SessionStorage
 }
 
 type RealSessionStore struct {
@@ -49,6 +52,9 @@ func (r RealSessionStore) VerifySessionIdentifier(key string) bool {
 	if err == nil {
 		return true
 	}
-	panic(err)
 	return false
+}
+
+func (r RealSessionStore) GetSessionStorageFor(key string) SessionStorage {
+	return r.storageInitializer.New(key)
 }

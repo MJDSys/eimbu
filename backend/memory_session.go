@@ -1,9 +1,27 @@
 package main
 
-type MemorySessionInitializer struct{}
+type MemorySessionInitializer struct {
+	sessions map[string]SessionStorage
+}
 
-func (MemorySessionInitializer) New() SessionStorage {
-	return &MemorySession{data: make(map[string]string)}
+func NewMemorySessionInitializer() SessionStorageInitializer {
+	return &MemorySessionInitializer{sessions: make(map[string]SessionStorage)}
+}
+
+func (initializer *MemorySessionInitializer) New(key string) (session SessionStorage) {
+	session = &MemorySession{data: make(map[string]string)}
+
+	initializer.sessions[key] = session
+
+	return
+}
+
+func (initializer *MemorySessionInitializer) Retreive(key string) SessionStorage {
+	session, ok := initializer.sessions[key]
+	if !ok {
+		return initializer.New(key)
+	}
+	return session
 }
 
 type MemorySession struct {
