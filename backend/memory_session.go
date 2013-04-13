@@ -2,7 +2,7 @@ package main
 
 type MemorySessionInitializer struct{}
 
-func (MemorySessionInitializer) New() SessionStore {
+func (MemorySessionInitializer) New() SessionStorage {
 	return &MemorySession{data: make(map[string]string)}
 }
 
@@ -14,5 +14,5 @@ func (m *MemorySession) Get(key string) string {
 	return m.data[key]
 }
 func (m *MemorySession) Set(key, value string) {
-	m.data[key] = value;
+	m.data[key] = value
 }

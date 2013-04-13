@@ -6,9 +6,9 @@ import (
 )
 
 func TestMemmorySessionInitializer(t *testing.T) {
-	var session SessionStore = (MemorySessionInitializer{}).New()
+	var session SessionStorage = (MemorySessionInitializer{}).New()
 	if session == nil {
-		t.Error("Initializer returned a null session!");
+		t.Error("Initializer returned a null session!")
 	}
 	if _, ok := session.(*MemorySession); !ok {
 		t.Error("Initializer didn't return a Memory Session!")
@@ -16,7 +16,7 @@ func TestMemmorySessionInitializer(t *testing.T) {
 }
 
 func TestMemmorySessionWithFuzzer(t *testing.T) {
-	var session SessionStore = (MemorySessionInitializer{}).New()
+	var session SessionStorage = (MemorySessionInitializer{}).New()
 
 	type KeyValue struct {
 		Key, Value string

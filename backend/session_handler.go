@@ -1,12 +1,10 @@
 package main
 
-type SessionStore interface {
+type SessionStorage interface {
 	Get(key string) string
 	Set(key, value string)
 }
 
-type SessionStoreInitializer interface {
-	New() SessionStore
+type SessionStorageInitializer interface {
+	New() SessionStorage
 }
-
-
