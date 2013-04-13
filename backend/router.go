@@ -61,6 +61,7 @@ func (h *HttpHandlerRegexMatcher) Handle(path string, handler MatchedHttpHandler
 }
 
 type RegularHandlar func(w http.ResponseWriter, r *http.Request, matches map[string]string)
+
 func (h RegularHandlar) serveHTTP(w http.ResponseWriter, r *http.Request, matches map[string]string) {
 	h(w, r, matches)
 }
@@ -70,7 +71,7 @@ func (h *HttpHandlerRegexMatcher) HandleFunc(path string, handler RegularHandlar
 }
 
 func (h *HttpHandlerRegexMatcher) HandleRegularHandler(path string, handler http.Handler) {
-	h.HandleFunc(path, func (w http.ResponseWriter, r *http.Request, matches map[string]string) {
+	h.HandleFunc(path, func(w http.ResponseWriter, r *http.Request, matches map[string]string) {
 		handler.ServeHTTP(w, r)
 	})
 }
