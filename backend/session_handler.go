@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/base64"
+
 	"github.com/gorilla/securecookie"
 )
 
@@ -16,6 +18,7 @@ type SessionStorageInitializer interface {
 
 type SessionsStore interface {
 	NewSessionIdentifier() string
+	RefreshSessionIdentifier(key string) string
 	VerifySessionIdentifier(key string) bool
 
 	GetSessionStorageFor(key string) SessionStorage
@@ -45,6 +48,20 @@ func (r RealSessionStore) NewSessionIdentifier() string {
 	return ""
 }
 
+func (r RealSessionStore) RefreshSessionIdentifier(oldId string) string {
+	var actualId []byte
+	if err := r.keys.Decode(SessionName, oldId, &actualId); err != nil {
+		panic(err)
+	}
+
+	if id, err := r.keys.Encode(SessionName, actualId); err != nil {
+		panic(err)
+	} else {
+		return id
+	}
+	return ""
+}
+
 func (r RealSessionStore) VerifySessionIdentifier(key string) bool {
 	var id []byte
 	err := r.keys.Decode(SessionName, key, &id)
@@ -56,5 +73,11 @@ func (r RealSessionStore) VerifySessionIdentifier(key string) bool {
 }
 
 func (r RealSessionStore) GetSessionStorageFor(key string) SessionStorage {
-	return r.storageInitializer.New(key)
+	var id []byte
+	err := r.keys.Decode(SessionName, key, &id)
+
+	if err == nil {
+		return r.storageInitializer.Retreive(base64.StdEncoding.EncodeToString(id))
+	}
+	return nil
 }

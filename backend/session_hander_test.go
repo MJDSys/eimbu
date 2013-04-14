@@ -39,4 +39,22 @@ func TestCreatingAndRetreivingSession(t *testing.T) {
 	if err := quick.Check(f, nil); err != nil {
 		t.Error(err)
 	}
+	keyName, value := "MyKey", "MyValue"
+
+	storage.Set(keyName, value)
+	if storage.Get(keyName) != value {
+		t.Error("Failed to retreive same value from same session!")
+	}
+
+	session2 := SessionsStoreInst.GetSessionStorageFor(sessionId)
+	if session2.Get(keyName) != value {
+		t.Error("Failed to retreive same value from second retreived session!")
+	}
+
+	sessionId = SessionsStoreInst.RefreshSessionIdentifier(sessionId)
+
+	session3 := SessionsStoreInst.GetSessionStorageFor(sessionId)
+	if session3.Get(keyName) != value {
+		t.Error("Failed to retreive same value from third retreived session with refreshed key!")
+	}
 }
