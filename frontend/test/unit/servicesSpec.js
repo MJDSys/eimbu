@@ -131,12 +131,11 @@ describe('service', function() {
 
 						var response = JSON.stringify({msg_id: data_o.msg_id, data: data_o.data});
 
-						self = this;
-						var sendResponse = function() {
-							if(self.onmessage) {
-								self.onmessage(response);
+						var sendResponse = function(onmessage){ return function() {
+							if(onmessage) {
+								onmessage(response);
 							}
-						}
+						}; }(this.onmessage);
 						if(this._delay_response) {
 							//This trick cause a delayed response.  Not using setTimeout to avoid having to actual give up control.
 							var d = $q.defer();
@@ -237,7 +236,6 @@ describe('service', function() {
 	describe('Authentication Resolver Verifier', function() {
 		var authServer;
 		var $window;
-		var authenticationResolveVerifier;
 
 		beforeEach(inject(function($injector, $httpBackend) {
 			authServer = {
@@ -261,34 +259,40 @@ describe('service', function() {
 					}
 				}
 			};
-
-			authenticationResolveVerifier = $injector.get('authenticationResolveVerifier');
 		}));
 
-		it('verifies redirection when user not logged in..', inject(function(authentication, $rootScope, $q, $httpBackend) {
+		it('verifies redirection when user not logged in..', inject(function(authenticationResolveVerifier, authentication, $rootScope, $q, $httpBackend) {
 			$httpBackend.expectGET('api/ses/verify_session');
+			var verified = null;
 
 			authenticationResolveVerifier($q, $window, authentication).then(function() {
-				this.fail(Error("Should not have a sucessful resolve!"));
-			}.bind(this), function() {
+				verified = true;
+			}, function() {
+				verified = false;
 				expect($window.location.href).toEqual('http://login_url/');
 			});
 
 			$httpBackend.flush();
 			$rootScope.$digest();
+
+			expect(verified).toEqual(false);
 		}));
 
-		it('verifies user logged in is fine.', inject(function(authentication, $rootScope, $q, $httpBackend) {
+		it('verifies user logged in is fine.', inject(function(authenticationResolveVerifier, authentication, $rootScope, $q, $httpBackend) {
 			authServer.hasToken = true;
 			$httpBackend.expectGET('api/ses/verify_session');
+			var verified = null;
 
 			authenticationResolveVerifier($q, $window, authentication).then(function() {
+				verified = true;
 			}, function() {
-				this.fail(Error("Should have verified auth!"));
-			}.bind(this));
+				verified = false;
+			});
 
 			$httpBackend.flush();
 			$rootScope.$digest();
+
+			expect(verified).toEqual(true);
 		}));
 	});
 });
