@@ -25,7 +25,7 @@ angular.module('eimbu.services', ['ngResource'])
 		});
 	}).
 
-	factory('WebSocket$', function(){ if(WebSocket){  return WebSocket; } else { return null; } }).
+	factory('WebSocket$', function(){ if(window.WebSocket){  return WebSocket; } else { return null; } }).
 
 	factory('WebSocketWrapper', function($rootScope, $q, WebSocket$) {
 		return function(url, protocols) {
